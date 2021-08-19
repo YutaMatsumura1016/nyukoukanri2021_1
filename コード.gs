@@ -13,7 +13,7 @@ var rowData = {};
     var id = SpreadsheetApp.getActiveSpreadsheet();
     var sheet = id.getActiveSheet();
 
-    //idmをandroidから受け取る
+    //idmをアプリから受け取る
     var idm = e.parameter.idm;
     var gate = e.parameter.gate;
     
@@ -68,7 +68,9 @@ var rowData = {};
         return ContentService.createTextOutput(rowData.value).setMimeType(ContentService.MimeType.TEXT);
 
     
-      }else if(statusRange == statusIn || statusRange == statusRe){//入構状態だったら      
+      }else if(statusRange == statusIn || statusRange == statusRe){//入構状態だったら
+        sheet.getRange(searchIdm, 7).setValue(statusRe);//セルに記入
+        sheet.getRange(searchIdm, 8).setValue(gate);//セルに記入
         var range = sheet.getRange(searchIdm, 9);
         range.insertCells(SpreadsheetApp.Dimension.COLUMNS);
         sheet.getRange(searchIdm, 9).setValue(dateLog);//時刻を記入
