@@ -123,3 +123,16 @@ function toZero(){
   }
 }
 
+
+//データリセット
+function reset(){
+  var id = '1MBeZEEVi1RIv1L32XN7Zws0vP0Ri5k8x9bJhC8EELMw';
+  var sheet = SpreadsheetApp.openById(id).getSheetByName("data1");
+  var i = 2;
+  var lastRow = sheet.getLastRow();
+  var lastColumn = sheet.getLastColumn();
+
+  var timeRange = sheet.getRange(2, 9, lastRow, lastColumn);
+  timeRange.setValue(null);
+}
+
