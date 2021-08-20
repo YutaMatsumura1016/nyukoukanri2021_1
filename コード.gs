@@ -10,8 +10,8 @@ var rowData = {};
     return ContentService.createTextOutput(rowData.value);  
   }else{
     
-    var id = SpreadsheetApp.getActiveSpreadsheet();
-    var sheet = id.getActiveSheet();
+    var id = '1MBeZEEVi1RIv1L32XN7Zws0vP0Ri5k8x9bJhC8EELMw';
+    var sheet = SpreadsheetApp.openById(id).getSheetByName("data1");
 
     //idmをアプリから受け取る
     var idm = e.parameter.idm;
@@ -102,4 +102,24 @@ var rowData = {};
 
 }//全体
 
+
+//IDmの修正
+function toZero(){
+  var id = '1MBeZEEVi1RIv1L32XN7Zws0vP0Ri5k8x9bJhC8EELMw';
+  var sheet = SpreadsheetApp.openById(id).getSheetByName("data1");
+  var i = 2;
+  var lastRow = sheet.getLastRow() + 1;
+
+
+  while(i<lastRow){
+    var IDmRange = sheet.getRange(i, 6);
+    var IDm = IDmRange.getValue();
+    var IDm2 = "0" + IDm.slice(1);
+
+    if(IDmRange != null){
+      IDmRange.setValue(IDm2);
+    }
+    i++
+  }
+}
 
