@@ -30,9 +30,9 @@ var rowData = {};
     var nameArray = arrayRoll[1];
     var menberArray = arrayRoll[2];
     var idmArray = arrayRoll[5];
-    var statusArray = arrayRoll[6];
-    var gateArray = arrayRoll[7];
-    var timeArray = arrayRoll[8];
+    var statusArray = arrayRoll[7];
+    var gateArray = arrayRoll[8];
+    var timeArray = arrayRoll[9];
     var statusIn = "入 構";
     var statusRe = "再入構";
     var error = "エラーが発生しました。係員は処理を行ってください。\n"
@@ -56,11 +56,12 @@ var rowData = {};
       var statusTime = (timeArray[searchIdm -1]);//IDmに対応した前回入構時刻を探す
       
 
+
       if(statusRange == ""){//未記入または退構状態だったら
         var status = statusIn;//入構をセット
-        sheet.getRange(searchIdm, 7).setValue(status);//セルに記入
-        sheet.getRange(searchIdm, 8).setValue(gate);//セルに記入
-        sheet.getRange(searchIdm, 9).setValue(dateLog);//時刻を記入
+        sheet.getRange(searchIdm, 8).setValue(status);//セルに記入
+        sheet.getRange(searchIdm, 9).setValue(gate);//セルに記入
+        sheet.getRange(searchIdm, 10).setValue(dateLog);//時刻を記入
         
         //アプリに返す
         var returnText = "名　前：" + nameRange + "\n" + "団　体：" + statusMenber + "\n" + "状　態：" + statusIn + "\n" + "入構門：" + gate + "\n" + "時　刻：" + dateLog;
@@ -69,11 +70,11 @@ var rowData = {};
 
     
       }else if(statusRange == statusIn || statusRange == statusRe){//入構状態だったら
-        sheet.getRange(searchIdm, 7).setValue(statusRe);//セルに記入
-        sheet.getRange(searchIdm, 8).setValue(gate);//セルに記入
-        var range = sheet.getRange(searchIdm, 9);
+        sheet.getRange(searchIdm, 8).setValue(statusRe);//セルに記入
+        sheet.getRange(searchIdm, 9).setValue(gate);//セルに記入
+        var range = sheet.getRange(searchIdm, 10);
         range.insertCells(SpreadsheetApp.Dimension.COLUMNS);
-        sheet.getRange(searchIdm, 9).setValue(dateLog);//時刻を記入
+        sheet.getRange(searchIdm, 10).setValue(dateLog);//時刻を記入
         
         //アプリに返す
         var returnText = "名　前　：" + nameRange + "\n" + "団　体　：" + statusMenber + "\n" + "状　態　：" + statusRe + "\n" + "再入構門：" + gate + "\n" + "時　刻　：" + dateLog;
@@ -82,7 +83,7 @@ var rowData = {};
     
       }else{
         var status = error;
-        rowData.value =  error + outlier;
+        rowData.value =  error + outlier + "/n" + statusRange;
         return ContentService.createTextOutput(rowData.value);
 
     
@@ -104,7 +105,7 @@ var rowData = {};
 
 
 //IDmの修正
-function toZero(){
+function modify(){
   var id = '1MBeZEEVi1RIv1L32XN7Zws0vP0Ri5k8x9bJhC8EELMw';
   var sheet = SpreadsheetApp.openById(id).getSheetByName("data1");
   var i = 2;
@@ -115,13 +116,15 @@ function toZero(){
     var IDmRange = sheet.getRange(i, 6);
     var IDm = IDmRange.getValue();
     var IDm2 = "0" + IDm.slice(1);
+    var IDm3 = IDm2.toUpperCase();
 
     if(IDmRange != null){
-      IDmRange.setValue(IDm2);
+      IDmRange.setValue(IDm3);  
     }
     i++
   }
 }
+
 
 
 //データリセット
@@ -132,7 +135,7 @@ function reset(){
   var lastRow = sheet.getLastRow();
   var lastColumn = sheet.getLastColumn();
 
-  var timeRange = sheet.getRange(2, 9, lastRow, lastColumn);
+  var timeRange = sheet.getRange(2, 8, lastRow, lastColumn);
   timeRange.setValue(null);
 }
 

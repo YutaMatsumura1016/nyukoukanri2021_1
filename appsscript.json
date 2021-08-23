@@ -1,17 +1,15 @@
 {
   "timeZone": "Asia/Tokyo",
   "dependencies": {
-    "libraries": [
-      {
-        "userSymbol": "Underscore",
-        "libraryId": "1PcEHcGVC1njZd8SfXtmgQk19djwVd2GrrW1gd7U5hNk033tzi6IUvIAV",
-        "version": "4"
-      }
-    ]
+    "libraries": [{
+      "userSymbol": "Underscore",
+      "libraryId": "1PcEHcGVC1njZd8SfXtmgQk19djwVd2GrrW1gd7U5hNk033tzi6IUvIAV",
+      "version": "4"
+    }]
   },
   "webapp": {
-    "executeAs": "USER_DEPLOYING",
-    "access": "DOMAIN"
+    "access": "DOMAIN",
+    "executeAs": "USER_DEPLOYING"
   },
   "exceptionLogging": "STACKDRIVER",
   "runtimeVersion": "DEPRECATED_ES5"
