@@ -34,9 +34,9 @@ var rowData = {};
     var nameArray = arrayRoll[1];
     var menberArray = arrayRoll[2];
     var idmArray = arrayRoll[5];
-    var statusArray = arrayRoll[9];
-    var gateArray = arrayRoll[10];
-    var timeArray = arrayRoll[11];
+//    var statusArray = arrayRoll[9];
+//    var gateArray = arrayRoll[10];
+//    var timeArray = arrayRoll[11];
     var statusIn = "入 構";
     var statusRe = "再入構";
     var error = "エラーが発生しました";
@@ -55,12 +55,12 @@ var rowData = {};
  
       var nameRange = (nameArray[searchIdm -1]);//IDmに対応した名前を探す
       var statusMember = (menberArray[searchIdm -1]);//IDmに対応した団体名を探す
-      var statusRange = (statusArray[searchIdm -1]);//IDmに対応したステータスを探す
-      var statusGate = (gateArray[searchIdm -1]);//IDmに対応したキャンパスを探す
-      var statusTime = (timeArray[searchIdm -1]);//IDmに対応した前回入構時刻を探す
+//      var statusRange = (statusArray[searchIdm -1]);//IDmに対応したステータスを探す
+//      var statusGate = (gateArray[searchIdm -1]);//IDmに対応したキャンパスを探す
+//      var statusTime = (timeArray[searchIdm -1]);//IDmに対応した前回入構時刻を探す
       
       
-      if(statusRange == "" || statusRange == statusIn){
+//      if(statusRange == "" || statusRange == statusIn){
         sheet.getRange(searchIdm, 10).setValue(statusIn);//セルに記入
         sheet.getRange(searchIdm, 11).setValue(gate);//セルに記入
         var range = sheet.getRange(searchIdm, 12);
@@ -84,19 +84,19 @@ var rowData = {};
         var htmlTemplate = HtmlService.createTemplateFromFile("result");
         htmlTemplate.nameRange = nameRange;
         htmlTemplate.member = member;
-        htmlTemplate.statusIn = statusIn;
-        htmlTemplate.gate = gate;
-        htmlTemplate.dateLog = dateLog;
+//        htmlTemplate.statusIn = statusIn;
+//        htmlTemplate.gate = gate;
+//        htmlTemplate.dateLog = dateLog;
         return htmlTemplate.evaluate();
     
-      }else{
-        var htmlTemplate = HtmlService.createTemplateFromFile("outlier");
-        htmlTemplate.error = error;
-        htmlTemplate.treatment = treatment;
-        htmlTemplate.error = outlier;
-        htmlTemplate.statusRange = statusRange;
-        return htmlTemplate.evaluate();    
-      }
+//      }else{
+//        var htmlTemplate = HtmlService.createTemplateFromFile("outlier");
+//        htmlTemplate.error = error;
+//        htmlTemplate.treatment = treatment;
+//        htmlTemplate.error = outlier;
+//        htmlTemplate.statusRange = statusRange;
+//        return htmlTemplate.evaluate();    
+//      }
       
   
     }else{//IDmが見つからなかったら
