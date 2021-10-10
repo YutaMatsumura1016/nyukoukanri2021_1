@@ -34,8 +34,9 @@ var rowData = {};
     var nameArray = arrayRoll[1];
     var menberArray = arrayRoll[2];
     var idmArray = arrayRoll[5];
-    var statusArray = arrayRoll[9];
-    var gateArray = arrayRoll[10];
+    var timeArray = arrayRoll[9];
+    var statusArray = arrayRoll[10];
+    var gateArray = arrayRoll[11];
     var statusIn = "入 構";
     var statusRe = "再入構";
     var error = "エラーが発生しました";
@@ -54,6 +55,7 @@ var rowData = {};
  
       var nameRange = (nameArray[searchIdm -1]);//IDmに対応した名前を探す
       var statusMember = (menberArray[searchIdm -1]);//IDmに対応した団体名を探す
+      var timeRange = (timeArray[searchIdm -1]);//IDmに対応した入構時間を探す
       
             
       //団体名を区切る
@@ -69,30 +71,133 @@ var rowData = {};
       member = member + memberSplitArray[i];
       
       
-      //SSに記入
-      if(statusArray[searchIdm -1] != "" && gateArray[searchIdm -1] === gate){
-        var range = sheet.getRange(searchIdm, 12);
-        range.insertCells(SpreadsheetApp.Dimension.COLUMNS);
-        sheet.getRange(searchIdm, 12).setValue(dateLog + " @" + gate);//時刻を記入
-      }else if(statusArray[searchIdm -1] != "" && gateArray[searchIdm -1] != gate){
-        sheet.getRange(searchIdm, 11).setValue(gate);//セルに記入
-        var range = sheet.getRange(searchIdm, 12);
-        range.insertCells(SpreadsheetApp.Dimension.COLUMNS);
-        sheet.getRange(searchIdm, 12).setValue(dateLog + " @" + gate);//時刻を記入
-      }else{
-        sheet.getRange(searchIdm, 10).setValue(statusIn);//セルに記入
-        sheet.getRange(searchIdm, 11).setValue(gate);//セルに記入
-        var range = sheet.getRange(searchIdm, 12);
-        range.insertCells(SpreadsheetApp.Dimension.COLUMNS);
-        sheet.getRange(searchIdm, 12).setValue(dateLog + " @" + gate);//時刻を記入
+      
+      
+      
+      //入構時間を区切る
+      var timeSplitArray = timeRange.split("/");
+      var jumbiArray = timeSplitArray.filter(item => item.match(/A/));
+      var ichinichiArray = timeSplitArray.filter(item => item.match(/B/));
+      var futsukaArray = timeSplitArray.filter(item => item.match(/C/));
+      
+      var jumbiNumber = jumbiArray.length;
+      var ichinichiNumber = ichinichiArray.length;
+      var futsukaNumber = futsukaArray.length;
+      var j = 0;
+      var k = 0;
+      var l = 0;
+      var jumbiArray2 = [];
+      var ichinichiArray2 = [];
+      var futsukaArray2 = [];
+      
+      
+      while(j<jumbiNumber){
+        jumbiArray2[j] = jumbiArray[j].slice(1);
+        j++
       }
+
+      while(k<ichinichiNumber){
+        ichinichiArray2[k] = ichinichiArray[k].slice(1);
+        k++
+      }
+      while(l<futsukaNumber){
+        futsukaArray2[l] = futsukaArray[l].slice(1);
+        l++
+      }
+      
+      
+      var jumbiMin = Math.min.apply(null, jumbiArray2);
+      var ichinichiMin = Math.min.apply(null, ichinichiArray2);
+      var futsukaMin = Math.min.apply(null, futsukaArray2);
+      
+      
+      if(jumbiMin.length !=4){
+        jumbiMin = "0" + jumbiMin;
+        var ja = String(jumbiMin).substr(0, 2);
+        var jb = ":";
+        var jc = String(jumbiMin).substr(2);
+        var jstrTime = "準備日：" + ja + jb + jc + "\n";
+      }else{
+        var ja = String(jumbiMin).substr(0, 2);
+        var jb = ":";
+        var jc = String(jumbiMin).substr(2);
+        var jstrTime = "準備日：" + ja + jb + jc + "\n";
+      }
+      
+      if(ichinichiMin.length !=4){
+        ichinichiMin = "0" + ichinichiMin;
+        var ka = String(ichinichiMin).substr(0, 2);
+        var kb = ":";
+        var kc = String(ichinichiMin).substr(2);
+        var kstrTime = "一日目：" + ka + kb + kc + "\n";
+      }else{
+        var ka = String(ichinichiMin).substr(0, 2);
+        var kb = ":";
+        var kc = String(ichinichiMin).substr(2);
+        var kstrTime = "一日目：" + ka + kb + kc + "\n";
+      }
+      
+      if(futsukaMin.length !=4){
+      futsukaMin = "0" + futsukaMin;
+        var la =  String(futsukaMin).substr(0, 2);
+        var lb = ":";
+        var lc =  String(futsukaMin).substr(2);
+        var lstrTime = "二日目：" + la + lb + lc;
+      }else{
+        var la =  String(futsukaMin).substr(0, 2);
+        var lb = ":";
+        var lc =  String(futsukaMin).substr(2);
+        var lstrTime = "二日目：" + la + lb + lc;
+      }
+      
+      
+      
+      if(jumbiNumber >= 1 && ichinichiNumber >=1 && futsukaNumber >=1){
+        var time = jstrTime + kstrTime + lstrTime;
+      }else if(jumbiNumber >= 1 && ichinichiNumber === 0 && futsukaNumber === 0){
+        var time = jstrTime;
+      }else if(jumbiNumber >= 1 && ichinichiNumber >=1 && futsukaNumber === 0){
+        var time = jstrTime + kstrTime;
+      }else if(jumbiNumber >= 1 && ichinichiNumber === 0 && futsukaNumber >=1){
+        var time = jstrTime + lstrTime;
+      }else if(jumbiNumber === 0 && ichinichiNumber >=1 && futsukaNumber === 0){
+        var time = kstrTime;
+      }else if(jumbiNumber === 0 && ichinichiNumber >=1 && futsukaNumber >=1){
+        var time = kstrTime + lstrTime;
+      }else if(jumbiNumber === 0 && ichinichiNumber === 0 && futsukaNumber >=1){
+        var time = lstrTime;
+      }else{
+        var time = "入構時間が記録されていないか不正です";
+      }
+
+      
       
       //アプリに返す
       var htmlTemplate = HtmlService.createTemplateFromFile("result");
       htmlTemplate.nameRange = nameRange;
       htmlTemplate.member = member;
+      htmlTemplate.time = time;
       return htmlTemplate.evaluate();
       
+      
+      
+      //SSに記入
+      if(statusArray[searchIdm -1] != "" && gateArray[searchIdm -1] === gate){
+        var range = sheet.getRange(searchIdm, 13);
+        range.insertCells(SpreadsheetApp.Dimension.COLUMNS);
+        sheet.getRange(searchIdm, 13).setValue(dateLog + " @" + gate);//時刻を記入
+      }else if(statusArray[searchIdm -1] != "" && gateArray[searchIdm -1] != gate){
+        sheet.getRange(searchIdm, 12).setValue(gate);//セルに記入
+        var range = sheet.getRange(searchIdm, 13);
+        range.insertCells(SpreadsheetApp.Dimension.COLUMNS);
+        sheet.getRange(searchIdm, 13).setValue(dateLog + " @" + gate);//時刻を記入
+      }else{
+        sheet.getRange(searchIdm, 11).setValue(statusIn);//セルに記入
+        sheet.getRange(searchIdm, 12).setValue(gate);//セルに記入
+        var range = sheet.getRange(searchIdm, 13);
+        range.insertCells(SpreadsheetApp.Dimension.COLUMNS);
+        sheet.getRange(searchIdm, 13).setValue(dateLog + " @" + gate);//時刻を記入
+      }
       
       
     }else{//IDmが見つからなかったら
@@ -120,7 +225,7 @@ function reset(){
   var lastRow = sheet.getLastRow();
   var lastColumn = sheet.getLastColumn();
 
-  var timeRange = sheet.getRange(2, 10, lastRow, lastColumn);
+  var timeRange = sheet.getRange(2, 11, lastRow, lastColumn);
   timeRange.setValue(null);
 }
 
