@@ -116,12 +116,12 @@ var rowData = {};
         var ja = String(jumbiMin).substr(0, 2);
         var jb = ":";
         var jc = String(jumbiMin).substr(2);
-        var jstrTime = "準備日：" + ja + jb + jc + "\n";
+        var jstrTime = "準備日　" + ja + jb + jc + "\n";
       }else{
         var ja = String(jumbiMin).substr(0, 2);
         var jb = ":";
         var jc = String(jumbiMin).substr(2);
-        var jstrTime = "準備日：" + ja + jb + jc + "\n";
+        var jstrTime = "準備日　" + ja + jb + jc + "\n";
       }
       
       if(ichinichiMin.length !=4){
@@ -129,12 +129,12 @@ var rowData = {};
         var ka = String(ichinichiMin).substr(0, 2);
         var kb = ":";
         var kc = String(ichinichiMin).substr(2);
-        var kstrTime = "一日目：" + ka + kb + kc + "\n";
+        var kstrTime = "一日目　" + ka + kb + kc + "\n";
       }else{
         var ka = String(ichinichiMin).substr(0, 2);
         var kb = ":";
         var kc = String(ichinichiMin).substr(2);
-        var kstrTime = "一日目：" + ka + kb + kc + "\n";
+        var kstrTime = "一日目　" + ka + kb + kc + "\n";
       }
       
       if(futsukaMin.length !=4){
@@ -142,12 +142,12 @@ var rowData = {};
         var la =  String(futsukaMin).substr(0, 2);
         var lb = ":";
         var lc =  String(futsukaMin).substr(2);
-        var lstrTime = "二日目：" + la + lb + lc;
+        var lstrTime = "二日目　" + la + lb + lc;
       }else{
         var la =  String(futsukaMin).substr(0, 2);
         var lb = ":";
         var lc =  String(futsukaMin).substr(2);
-        var lstrTime = "二日目：" + la + lb + lc;
+        var lstrTime = "二日目　" + la + lb + lc;
       }
       
       
