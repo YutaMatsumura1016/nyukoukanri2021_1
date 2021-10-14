@@ -79,7 +79,7 @@ var rowData = {};
       var jumbiArray = timeSplitArray.filter(item => item.match(/A/));
       var ichinichiArray = timeSplitArray.filter(item => item.match(/B/));
       var futsukaArray = timeSplitArray.filter(item => item.match(/C/));
-      
+
       var jumbiNumber = jumbiArray.length;
       var ichinichiNumber = ichinichiArray.length;
       var futsukaNumber = futsukaArray.length;
@@ -89,7 +89,8 @@ var rowData = {};
       var jumbiArray2 = [];
       var ichinichiArray2 = [];
       var futsukaArray2 = [];
-      
+      var noNyukou = "入構はありません";
+     
       
       while(j<jumbiNumber){
         jumbiArray2[j] = jumbiArray[j].slice(1);
@@ -106,80 +107,253 @@ var rowData = {};
       }
       
       
-      var jumbiMin = Math.min.apply(null, jumbiArray2);
-      var ichinichiMin = Math.min.apply(null, ichinichiArray2);
-      var futsukaMin = Math.min.apply(null, futsukaArray2);
+      var jumbiWasedaArray = jumbiArray2.filter(item => item.match(/W/));
+      var jumbiToyamaArray = jumbiArray2.filter(item => item.match(/T/));
+      var jumbiKougaiArray = jumbiArray2.filter(item => item.match(/K/));
+      
+      var ichinichiWasedaArray = ichinichiArray2.filter(item => item.match(/W/));
+      var ichinichiToyamaArray = ichinichiArray2.filter(item => item.match(/T/));
+      var ichinichiKougaiArray = ichinichiArray2.filter(item => item.match(/K/));
+      
+      var futsukaWasedaArray = futsukaArray2.filter(item => item.match(/W/));
+      var futsukaToyamaArray = futsukaArray2.filter(item => item.match(/T/));
+      var futsukaKougaiArray = futsukaArray2.filter(item => item.match(/K/));
+      
+            
+      var jumbiWasedaNumber = jumbiWasedaArray.length;
+      var jumbiToyamaNumber = jumbiToyamaArray.length;
+      var jumbiKougaiNumber = jumbiKougaiArray.length;
+      
+      var ichinichiWasedaNumber = ichinichiWasedaArray.length;
+      var ichinichiToyamaNumber = ichinichiToyamaArray.length;
+      var ichinichiKougaiNumber = ichinichiKougaiArray.length;
+
+      var futsukaWasedaNumber = futsukaWasedaArray.length;
+      var futsukaToyamaNumber = futsukaToyamaArray.length;
+      var futsukaKougaiNumber = futsukaKougaiArray.length;
+      
+      var jw = 0;
+      var jt = 0;
+      var jk = 0;
+      var iw = 0;
+      var it = 0;
+      var ik = 0;
+      var fw = 0;
+      var ft = 0;
+      var fk = 0;
+      var jumbiWasedaArray2 = [];
+      var jumbiToyamaArray2 = [];
+      var jumbiKougaiArray2 = [];
+      
+      var ichinichiWasedaArray2 = [];
+      var ichinichiToyamaArray2 = [];
+      var ichinichiKougaiArray2 = [];
+      
+      var futsukaWasedaArray2 = [];
+      var futsukaToyamaArray2= [];
+      var futsukaKougaiArray2 = [];
       
       
-      if(jumbiMin.length !=4){
-        jumbiMin = "0" + jumbiMin;
-        var ja = String(jumbiMin).substr(0, 2);
-        var jb = ":";
-        var jc = String(jumbiMin).substr(2);
-        var jstrTime = "準備日　" + ja + jb + jc + "\n";
-      }else{
-        var ja = String(jumbiMin).substr(0, 2);
-        var jb = ":";
-        var jc = String(jumbiMin).substr(2);
-        var jstrTime = "準備日　" + ja + jb + jc + "\n";
+      while(jw<jumbiWasedaNumber){
+        jumbiWasedaArray2[jw] = jumbiWasedaArray[jw].slice(2);
+        jw++
+      }
+      while(jt<jumbiToyamaNumber){
+        jumbiToyamaArray2[jt] = jumbiToyamaArray[jt].slice(2);
+        jt++
+      }
+      while(jk<jumbiKougaiNumber){
+        jumbiKougaiArray2[jk] = jumbiKougaiArray[jk].slice(2);
+        jk++
+      }
+      while(iw<ichinichiWasedaNumber){
+        ichinichiWasedaArray2[iw] = ichinichiWasedaArray[iw].slice(2);
+        iw++
+      }
+      while(it<ichinichiToyamaNumber){
+        ichinichiToyamaArray2[it] = ichinichiToyamaArray[it].slice(2);
+        it++
+      }
+      while(ik<ichinichiKougaiNumber){
+        ichinichiKougaiArray2[ik] = ichinichiKougaiArray[ik].slice(2);
+        ik++
+      }
+      while(fw<futsukaWasedaNumber){
+        futsukaWasedaArray2[fw] = futsukaWasedaArray[fw].slice(2);
+        fw++
+      }
+      while(ft<jumbiToyamaNumber){
+        futsukaToyamaArray2[ft] = futsukaToyamaArray[ft].slice(2);
+        ft++
+      }
+      while(fk<futsukaKougaiNumber){
+        futsukaKougaiArray2[fk] = futsukaKougaiArray[fk].slice(2);
+        fk++
       }
       
-      if(ichinichiMin.length !=4){
-        ichinichiMin = "0" + ichinichiMin;
-        var ka = String(ichinichiMin).substr(0, 2);
-        var kb = ":";
-        var kc = String(ichinichiMin).substr(2);
-        var kstrTime = "一日目　" + ka + kb + kc + "\n";
+      
+      var jumbiWasedaMin = String(Math.min.apply(null, jumbiWasedaArray2));
+      var jumbiToyamaMin = String(Math.min.apply(null, jumbiToyamaArray2));
+      var jumbiKougaiMin = String(Math.min.apply(null, jumbiKougaiArray2));
+      var ichinichiWasedaMin = String(Math.min.apply(null, ichinichiWasedaArray2));
+      var ichinichiToyamaMin = String(Math.min.apply(null, ichinichiToyamaArray2));
+      var ichinichiKougaiMin = String(Math.min.apply(null, ichinichiKougaiArray2));
+      var futsukaWasedaMin = String(Math.min.apply(null, futsukaWasedaArray2));
+      var futsukaToyamaMin = String(Math.min.apply(null, futsukaToyamaArray2));
+      var futsukaKougaiMin = String(Math.min.apply(null, futsukaKougaiArray2));
+      var colon = "：";
+      
+      //準備日
+      if(jumbiWasedaMin.length === 3){
+        jumbiWasedaMin = "0" + jumbiWasedaMin;
+        var jwa = String(jumbiWasedaMin).substr(0, 2);
+        var jwc = String(jumbiWasedaMin).substr(2);
+        var jwstrTime = jwa + colon + jwc + "[早]" + "\n";
+      }else if(jumbiWasedaMin.length ===4){
+        var jwa = String(jumbiWasedaMin).substr(0, 2);
+        var jwc = String(jumbiWasedaMin).substr(2);
+        var jwstrTime = jwa + colon + jwc + "[早]" + "\n";
       }else{
-        var ka = String(ichinichiMin).substr(0, 2);
-        var kb = ":";
-        var kc = String(ichinichiMin).substr(2);
-        var kstrTime = "一日目　" + ka + kb + kc + "\n";
+        var jwstrTime = "";
+      }
+      if(jumbiToyamaMin.length === 3){
+        jumbiToyamaMin = "0" + jumbiToyamaMin;
+        var jta = String(jumbiToyamaMin).substr(0, 2);
+        var jtc = String(jumbiToyamaMin).substr(2);
+        var jtstrTime = jta + colon + jtc + "[戸]" + "\n";
+      }else  if(jumbiToyamaMin.length === 4){
+        var jta = String(jumbiToyamaMin).substr(0, 2);
+        var jtc = String(jumbiToyamaMin).substr(2);
+        var jtstrTime = jta + colon + jtc + "[戸]" + "\n";
+      }else{
+        var jtstrTime = "";
+      }
+      if(jumbiKougaiMin.length === 3){
+        jumbiKougaiMin = "0" + jumbiKougaiMin;
+        var jka = String(jumbiKougaiMin).substr(0, 2);
+        var jkc = String(jumbiKougaiMin).substr(2);
+        var jkstrTime = jka + colon + jkc + "[外]" + "\n";
+      }else if(jumbiKougaiMin.length === 4){
+        var jka = String(jumbiKougaiMin).substr(0, 2);
+        var jkc = String(jumbiKougaiMin).substr(2);
+        var jkstrTime = jka + colon + jkc + "[外]" + "\n";
+      }else{
+        var jkstrTime = "";
       }
       
-      if(futsukaMin.length !=4){
-      futsukaMin = "0" + futsukaMin;
-        var la =  String(futsukaMin).substr(0, 2);
-        var lb = ":";
-        var lc =  String(futsukaMin).substr(2);
-        var lstrTime = "二日目　" + la + lb + lc;
+      //一日目
+      if(ichinichiWasedaMin.length === 3){
+        ichinichiWasedaMin = "0" + ichinichiWasedaMin;
+        var iwa = String(ichinichiWasedaMin).substr(0, 2);
+        var iwc = String(ichinichiWasedaMin).substr(2);
+        var iwstrTime = iwa + colon + iwc + "[早]" + "\n";
+      }else if(ichinichiWasedaMin.length === 4){
+        var iwa = String(ichinichiWasedaMin).substr(0, 2);
+        var iwc = String(ichinichiWasedaMin).substr(2);
+        var iwstrTime = iwa + colon + iwc + "[早]" + "\n";
       }else{
-        var la =  String(futsukaMin).substr(0, 2);
-        var lb = ":";
-        var lc =  String(futsukaMin).substr(2);
-        var lstrTime = "二日目　" + la + lb + lc;
+        var iwstrTime = "";
+      }
+      if(ichinichiToyamaMin.length === 3){
+        ichinichiToyamaMin = "0" + ichinichiToyamaMin;
+        var ita = String(ichinichiToyamaMin).substr(0, 2);
+        var itc = String(ichinichiToyamaMin).substr(2);
+        var itstrTime = ita + colon + itc + "[戸]" + "\n";
+      }else if(ichinichiToyamaMin.length === 4){
+        var ita = String(ichinichiToyamaMin).substr(0, 2);
+        var itc = String(ichinichiToyamaMin).substr(2);
+        var itstrTime = ita + colon + itc + "[戸]" + "\n";
+      }else{
+        var itstrTime = "";
+      }
+      if(ichinichiKougaiMin.length === 3){
+        ichinichiKougaiMin = "0" + ichinichiKougaiMin;
+        var ika = String(ichinichiKougaiMin).substr(0, 2);
+        var ikc = String(ichinichiKougaiMin).substr(2);
+        var ikstrTime = ika + colon + ikc + "[外]" + "\n";
+      }else if(ichinichiKougaiMin.length === 4){
+        var ika = String(ichinichiKougaiMin).substr(0, 2);
+        var ikc = String(ichinichiKougaiMin).substr(2);
+        var ikstrTime = ika + colon + ikc + "[外]" + "\n";
+      }else{
+        var ikstrTime = ""
+      }
+      
+      //二日目
+      if(futsukaWasedaMin.length === 3){
+        futsukaWasedaMin = "0" + futsukaWasedaMin;
+        var fwa = String(futsukaWasedaMin).substr(0, 2);
+        var fwc = String(futsukaWasedaMin).substr(2);
+        var fwstrTime = fwa + colon + fwc + "[早]" + "\n";
+      }else if(futsukaWasedaMin.length === 4){
+        var fwa = String(futsukaWasedaMin).substr(0, 2);
+        var fwc = String(futsukaWasedaMin).substr(2);
+        var fwstrTime = fwa + colon + fwc + "[早]" + "\n";
+      }else{
+        var fwstrTime = "";
+      }
+      if(futsukaToyamaMin.length === 3){
+        futsukaToyamaMin = "0" + futsukaToyamaMin;
+        var fta = String(futsukaToyamaMin).substr(0, 2);
+        var ftc = String(futsukaToyamaMin).substr(2);
+        var ftstrTime = fta + colon + ftc + "[戸]" + "\n";
+      }else if(futsukaToyamaMin.length === 4){
+        var fta = String(futsukaToyamaMin).substr(0, 2);
+        var ftc = String(futsukaToyamaMin).substr(2);
+        var ftstrTime = fta + colon + ftc + "[戸]" + "\n";
+      }else{
+        var ftstrTime = "";
+      }
+      if(futsukaKougaiMin.length === 3){
+        futsukaKougaiMin = "0" + futsukaKougaiMin;
+        var fka = String(futsukaKougaiMin).substr(0, 2);
+        var fkc = String(futsukaKougaiMin).substr(2);
+        var fkstrTime = fka + colon + fkc + "[外]" + "\n";
+      }else if(futsukaKougaiMin.length === 4){
+        var fka = String(futsukaKougaiMin).substr(0, 2);
+        var fkc = String(futsukaKougaiMin).substr(2);
+        var fkstrTime = fka + colon + fkc + "[外]" + "\n";
+      }else{
+        var fkstrTime = "";
       }
       
       
+
+      //このままだとキャンパス順に出るので時間順に変える
+      var jTime = [jwstrTime, jtstrTime, jkstrTime];
+      var iTime = [iwstrTime, itstrTime, ikstrTime];
+      var fTime = [fwstrTime, ftstrTime, fkstrTime];
+
+      //配列を時間順に並び替え
+      //このままだとなぜか「,」も表示されちゃう
+      jTime.sort((a,b) => parseInt(a) - parseInt(b));
+      iTime.sort((a,b) => parseInt(a) - parseInt(b));
+      fTime.sort((a,b) => parseInt(a) - parseInt(b));
       
-      if(jumbiNumber >= 1 && ichinichiNumber >=1 && futsukaNumber >=1){
-        var time = jstrTime + kstrTime + lstrTime;
-      }else if(jumbiNumber >= 1 && ichinichiNumber === 0 && futsukaNumber === 0){
-        var time = jstrTime;
-      }else if(jumbiNumber >= 1 && ichinichiNumber >=1 && futsukaNumber === 0){
-        var time = jstrTime + kstrTime;
-      }else if(jumbiNumber >= 1 && ichinichiNumber === 0 && futsukaNumber >=1){
-        var time = jstrTime + lstrTime;
-      }else if(jumbiNumber === 0 && ichinichiNumber >=1 && futsukaNumber === 0){
-        var time = kstrTime;
-      }else if(jumbiNumber === 0 && ichinichiNumber >=1 && futsukaNumber >=1){
-        var time = kstrTime + lstrTime;
-      }else if(jumbiNumber === 0 && ichinichiNumber === 0 && futsukaNumber >=1){
-        var time = lstrTime;
-      }else{
-        var time = "入構時間が記録されていないか不正です";
+      //「,」を消すために配列を結合して文字列に
+      var jTime2 = jTime.toString();
+      var iTime2 = iTime.toString()
+      var fTime2 = fTime.toString()
+      
+      //文字列から「,」を削除
+      //正規表現を使わないと最初のしか削除されないから注意！
+      var jTime3 = jTime2.replace(/,/g, '');
+      var iTime3 = iTime2.replace(/,/g, '');
+      var fTime3 = fTime2.replace(/,/g, '');
+      
+      
+      //その日に入構がない人を「入構なし」に
+      //ここに置かないと配列の並び替えとか結合でエラーが出る
+      if(jwstrTime === ""　&& jtstrTime === "" && jkstrTime === ""){
+        jTime3 = noNyukou;
+      }
+      if(iwstrTime === ""　&& itstrTime === "" && ikstrTime === ""){
+        iTime3 = noNyukou;
+      }
+      if(fwstrTime === ""　&& ftstrTime === "" && fkstrTime === ""){
+        fTime3 = noNyukou;
       }
 
-      
-      
-      //アプリに返す
-      var htmlTemplate = HtmlService.createTemplateFromFile("result");
-      htmlTemplate.nameRange = nameRange;
-      htmlTemplate.member = member;
-      htmlTemplate.time = time;
-      return htmlTemplate.evaluate();
-      
-      
       
       //SSに記入
       if(statusArray[searchIdm -1] != "" && gateArray[searchIdm -1] === gate){
@@ -199,6 +373,14 @@ var rowData = {};
         sheet.getRange(searchIdm, 13).setValue(dateLog + " @" + gate);//時刻を記入
       }
       
+      //アプリに返す
+      var htmlTemplate = HtmlService.createTemplateFromFile("result");
+      htmlTemplate.nameRange = nameRange;
+      htmlTemplate.member = member;
+      htmlTemplate.jTime = jTime3;
+      htmlTemplate.iTime = iTime3;
+      htmlTemplate.fTime = fTime3;
+      return htmlTemplate.evaluate();
       
     }else{//IDmが見つからなかったら
       var htmlTemplate = HtmlService.createTemplateFromFile("unregistered");
@@ -241,7 +423,7 @@ function digits(){
   var idmArray = arrayRoll[5];
   var TELArray = arrayRoll[6];
   var lastRow = (idmArray.length)-1;
-  var i = 4429;
+  var i = 500;
   
   while(i<=lastRow){
     var itsGakuseki = gakusekiArray[i];
@@ -277,7 +459,7 @@ function digits(){
 function modify(){
   var id = '1MBeZEEVi1RIv1L32XN7Zws0vP0Ri5k8x9bJhC8EELMw';
   var sheet = SpreadsheetApp.openById(id).getSheetByName("data1");
-  var i = 4429;
+  var i = 500;
   var lastRow = sheet.getLastRow() + 1;
 
 
