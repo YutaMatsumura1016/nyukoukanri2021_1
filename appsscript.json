@@ -1,15 +1,17 @@
 {
   "timeZone": "Asia/Tokyo",
   "dependencies": {
-    "libraries": [{
-      "userSymbol": "Underscore",
-      "libraryId": "1PcEHcGVC1njZd8SfXtmgQk19djwVd2GrrW1gd7U5hNk033tzi6IUvIAV",
-      "version": "4"
-    }]
+    "libraries": [
+      {
+        "userSymbol": "Underscore",
+        "libraryId": "1PcEHcGVC1njZd8SfXtmgQk19djwVd2GrrW1gd7U5hNk033tzi6IUvIAV",
+        "version": "4"
+      }
+    ]
   },
   "webapp": {
-    "access": "DOMAIN",
-    "executeAs": "USER_DEPLOYING"
+    "executeAs": "USER_DEPLOYING",
+    "access": "DOMAIN"
   },
   "exceptionLogging": "STACKDRIVER",
   "runtimeVersion": "V8"

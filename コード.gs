@@ -37,6 +37,7 @@ var rowData = {};
     var timeArray = arrayRoll[9];
     var statusArray = arrayRoll[10];
     var gateArray = arrayRoll[11];
+    var lastColumn = sheet.getLastColumn();
     var statusIn = "入 構";
     var statusRe = "再入構";
     var error = "エラーが発生しました";
@@ -56,6 +57,11 @@ var rowData = {};
       var nameRange = (nameArray[searchIdm -1]);//IDmに対応した名前を探す
       var statusMember = (menberArray[searchIdm -1]);//IDmに対応した団体名を探す
       var timeRange = (timeArray[searchIdm -1]);//IDmに対応した入構時間を探す
+      var last = sheet.getLastColumn;
+      var lashyaku = last + 100;
+      var lashyakucell = "(5, lashyaku)";
+      
+      sheet.deleteColumn(60);
       
             
       //団体名を区切る
@@ -71,7 +77,14 @@ var rowData = {};
       member = member + memberSplitArray[i];
       
       
-      
+      if(String(member) === "早稲田大学チアダンスチームMYNX"){
+        var htmlTemplate = HtmlService.createTemplateFromFile("MYNX");
+        htmlTemplate.nameRange = nameRange;
+        htmlTemplate.error = error;
+        htmlTemplate.member = member;
+        return htmlTemplate.evaluate();
+      };
+
       
       
       //入構時間を区切る
@@ -84,8 +97,8 @@ var rowData = {};
       var ichinichiNumber = ichinichiArray.length;
       var futsukaNumber = futsukaArray.length;
       var j = 0;
-      var k = 0;
-      var l = 0;
+      var i = 0;
+      var f = 0;
       var jumbiArray2 = [];
       var ichinichiArray2 = [];
       var futsukaArray2 = [];
@@ -93,17 +106,17 @@ var rowData = {};
      
       
       while(j<jumbiNumber){
-        jumbiArray2[j] = jumbiArray[j].slice(1);
+        jumbiArray2[j] = jumbiArray[j].slice(1, 2) + jumbiArray[j].slice(3);
         j++
       }
 
-      while(k<ichinichiNumber){
-        ichinichiArray2[k] = ichinichiArray[k].slice(1);
-        k++
+      while(i<ichinichiNumber){
+        ichinichiArray2[i] = ichinichiArray[i].slice(1, 2) + ichinichiArray[i].slice(3);
+        i++
       }
-      while(l<futsukaNumber){
-        futsukaArray2[l] = futsukaArray[l].slice(1);
-        l++
+      while(f<futsukaNumber){
+        futsukaArray2[f] = futsukaArray[f].slice(1, 2) + futsukaArray[f].slice(3);
+        f++
       }
       
       
@@ -155,39 +168,39 @@ var rowData = {};
       
       
       while(jw<jumbiWasedaNumber){
-        jumbiWasedaArray2[jw] = jumbiWasedaArray[jw].slice(2);
+        jumbiWasedaArray2[jw] = jumbiWasedaArray[jw].slice(1);
         jw++
       }
       while(jt<jumbiToyamaNumber){
-        jumbiToyamaArray2[jt] = jumbiToyamaArray[jt].slice(2);
+        jumbiToyamaArray2[jt] = jumbiToyamaArray[jt].slice(1);
         jt++
       }
       while(jk<jumbiKougaiNumber){
-        jumbiKougaiArray2[jk] = jumbiKougaiArray[jk].slice(2);
+        jumbiKougaiArray2[jk] = jumbiKougaiArray[jk].slice(1);
         jk++
       }
       while(iw<ichinichiWasedaNumber){
-        ichinichiWasedaArray2[iw] = ichinichiWasedaArray[iw].slice(2);
+        ichinichiWasedaArray2[iw] = ichinichiWasedaArray[iw].slice(1);
         iw++
       }
       while(it<ichinichiToyamaNumber){
-        ichinichiToyamaArray2[it] = ichinichiToyamaArray[it].slice(2);
+        ichinichiToyamaArray2[it] = ichinichiToyamaArray[it].slice(1);
         it++
       }
       while(ik<ichinichiKougaiNumber){
-        ichinichiKougaiArray2[ik] = ichinichiKougaiArray[ik].slice(2);
+        ichinichiKougaiArray2[ik] = ichinichiKougaiArray[ik].slice(1);
         ik++
       }
       while(fw<futsukaWasedaNumber){
-        futsukaWasedaArray2[fw] = futsukaWasedaArray[fw].slice(2);
+        futsukaWasedaArray2[fw] = futsukaWasedaArray[fw].slice(1);
         fw++
       }
-      while(ft<jumbiToyamaNumber){
-        futsukaToyamaArray2[ft] = futsukaToyamaArray[ft].slice(2);
+      while(ft<futsukaToyamaNumber){
+        futsukaToyamaArray2[ft] = futsukaToyamaArray[ft].slice(1);
         ft++
       }
       while(fk<futsukaKougaiNumber){
-        futsukaKougaiArray2[fk] = futsukaKougaiArray[fk].slice(2);
+        futsukaKougaiArray2[fk] = futsukaKougaiArray[fk].slice(1);
         fk++
       }
       
@@ -355,24 +368,6 @@ var rowData = {};
       }
 
       
-      //SSに記入
-      if(statusArray[searchIdm -1] != "" && gateArray[searchIdm -1] === gate){
-        var range = sheet.getRange(searchIdm, 13);
-        range.insertCells(SpreadsheetApp.Dimension.COLUMNS);
-        sheet.getRange(searchIdm, 13).setValue(dateLog + " @" + gate);//時刻を記入
-      }else if(statusArray[searchIdm -1] != "" && gateArray[searchIdm -1] != gate){
-        sheet.getRange(searchIdm, 12).setValue(gate);//セルに記入
-        var range = sheet.getRange(searchIdm, 13);
-        range.insertCells(SpreadsheetApp.Dimension.COLUMNS);
-        sheet.getRange(searchIdm, 13).setValue(dateLog + " @" + gate);//時刻を記入
-      }else{
-        sheet.getRange(searchIdm, 11).setValue(statusIn);//セルに記入
-        sheet.getRange(searchIdm, 12).setValue(gate);//セルに記入
-        var range = sheet.getRange(searchIdm, 13);
-        range.insertCells(SpreadsheetApp.Dimension.COLUMNS);
-        sheet.getRange(searchIdm, 13).setValue(dateLog + " @" + gate);//時刻を記入
-      }
-      
       //アプリに返す
       var htmlTemplate = HtmlService.createTemplateFromFile("result");
       htmlTemplate.nameRange = nameRange;
@@ -380,7 +375,52 @@ var rowData = {};
       htmlTemplate.jTime = jTime3;
       htmlTemplate.iTime = iTime3;
       htmlTemplate.fTime = fTime3;
+
+
+  
+      //SSに記入
+      if(statusArray[searchIdm -1] != "" && gateArray[searchIdm -1] === gate){
+        var range = sheet.getRange(searchIdm, 13);
+        range.insertCells(SpreadsheetApp.Dimension.COLUMNS);
+        sheet.getRange(searchIdm, 13).setValue(dateLog + " @" + gate);//時刻を記入
+        
+//          if(last + 50 == null){
+//            //range.insertCells(SpreadsheetApp.Dimension.COLUMNS);
+//          }else if((3, lashyaku) === null){
+//            sheet.deleteColumn(lashyaku);
+//            };
+
+      }else if(statusArray[searchIdm -1] != "" && gateArray[searchIdm -1] != gate){
+        sheet.getRange(searchIdm, 12).setValue(gate);//セルに記入
+        var range = sheet.getRange(searchIdm, 13);
+        range.insertCells(SpreadsheetApp.Dimension.COLUMNS);
+        sheet.getRange(searchIdm, 13).setValue(dateLog + " @" + gate);//時刻を記入
+        
+//          if(last + 50 == null){
+//            //range.insertCells(SpreadsheetApp.Dimension.COLUMNS);
+//          }else if((3, lashyaku) == null){
+//            sheet.deleteColumn(lashyaku);
+//          };
+          
+
+      }else{
+        sheet.getRange(searchIdm, 11).setValue(statusIn);//セルに記入
+        sheet.getRange(searchIdm, 12).setValue(gate);//セルに記入
+        var range = sheet.getRange(searchIdm, 13);
+        range.insertCells(SpreadsheetApp.Dimension.COLUMNS);
+        sheet.getRange(searchIdm, 13).setValue(dateLog + " @" + gate);//時刻を記入
+
+//        if(last + 50 == null){
+//          //range.insertCells(SpreadsheetApp.Dimension.COLUMNS);
+//      }else if((3, lashyaku) === null){
+//          sheet.deleteColumn(lashyaku);
+//      };
+        
+      }
+      
+      //HTMLのリターン、ここに置くとなぜか速い。SSの前に置くとSSに記入されなくなる。
       return htmlTemplate.evaluate();
+      
       
     }else{//IDmが見つからなかったら
       var htmlTemplate = HtmlService.createTemplateFromFile("unregistered");
@@ -389,7 +429,7 @@ var rowData = {};
       htmlTemplate.unregistered = unregistered;
       return htmlTemplate.evaluate();
       
-      }//IDmが登録されているかどうか
+    }//IDmが登録されているかどうか
 
   }//読み取りエラーかどうか
   
@@ -423,7 +463,7 @@ function digits(){
   var idmArray = arrayRoll[5];
   var TELArray = arrayRoll[6];
   var lastRow = (idmArray.length)-1;
-  var i = 500;
+  var i = 1;
   
   while(i<=lastRow){
     var itsGakuseki = gakusekiArray[i];
@@ -459,7 +499,7 @@ function digits(){
 function modify(){
   var id = '1MBeZEEVi1RIv1L32XN7Zws0vP0Ri5k8x9bJhC8EELMw';
   var sheet = SpreadsheetApp.openById(id).getSheetByName("data1");
-  var i = 500;
+  var i = 6300;
   var lastRow = sheet.getLastRow() + 1;
 
 
@@ -503,4 +543,99 @@ function duplicate(){
   console.log(deplicate);
   
 }
-        
+
+
+//入構人数確認
+function people(){
+
+  var id = '1MBeZEEVi1RIv1L32XN7Zws0vP0Ri5k8x9bJhC8EELMw';
+  var sheet1 = SpreadsheetApp.openById(id).getSheetByName("data1");
+  var sheet2 = SpreadsheetApp.openById(id).getSheetByName("入構者数");
+  var textFinderW5 = sheet1.createTextFinder("^(?=.*11/05)(?=.*早稲田)").useRegularExpression(true);
+  var textFinderW6 = sheet1.createTextFinder("^(?=.*11/06)(?=.*早稲田)").useRegularExpression(true);
+  var textFinderW7 = sheet1.createTextFinder("^(?=.*11/07)(?=.*早稲田)").useRegularExpression(true);
+  var textFinderT5 = sheet1.createTextFinder("^(?=.*11/05)(?=.*戸山)").useRegularExpression(true);
+  var textFinderT6 = sheet1.createTextFinder("^(?=.*11/06)(?=.*戸山)").useRegularExpression(true);
+  var textFinderT7 = sheet1.createTextFinder("^(?=.*11/07)(?=.*戸山)").useRegularExpression(true);
+  var textFinderK5 = sheet1.createTextFinder("^(?=.*11/05)(?=.*構外)").useRegularExpression(true);
+  var textFinderK6 = sheet1.createTextFinder("^(?=.*11/06)(?=.*構外)").useRegularExpression(true);
+  var textFinderK7 = sheet1.createTextFinder("^(?=.*11/07)(?=.*構外)").useRegularExpression(true);
+  var cellsW5 = textFinderW5.findAll();
+  var cellsW6 = textFinderW6.findAll();
+  var cellsW7 = textFinderW7.findAll();
+  var cellsT5 = textFinderT5.findAll();
+  var cellsT6 = textFinderT6.findAll();
+  var cellsT7 = textFinderT7.findAll();
+  var cellsK5 = textFinderK5.findAll();
+  var cellsK6 = textFinderK6.findAll();
+  var cellsK7 = textFinderK7.findAll();
+  var itsukaWaseda = cellsW5.length;
+  var muikaWaseda = cellsW6.length;
+  var nanokaWaseda = cellsW7.length;
+  var itsukaToyama = cellsT5.length;
+  var muikaToyama = cellsT6.length;
+  var nanokaToyama = cellsT7.length;
+  var itsukaKougai = cellsK5.length;
+  var muikaKougai = cellsK6.length;
+  var nanokaKougai = cellsK7.length;
+  
+
+  sheet2.getRange("B9").setValue(itsukaWaseda);
+  sheet2.getRange("B11").setValue(muikaWaseda);
+  sheet2.getRange("B13").setValue(nanokaWaseda);
+  sheet2.getRange("C9").setValue(itsukaToyama);
+  sheet2.getRange("C11").setValue(muikaToyama);
+  sheet2.getRange("C13").setValue(nanokaToyama);
+  sheet2.getRange("E9").setValue(itsukaKougai);
+  sheet2.getRange("E11").setValue(muikaKougai);
+  sheet2.getRange("E13").setValue(nanokaKougai);
+
+}
+    
+
+function peopleBU(){
+
+  var id = '1c5ncM9uL7BzTm4yGGWb3CCqNA1FGVDV7VsOohA1Jf3A';
+  var sheet1 = SpreadsheetApp.openById(id).getSheetByName("data1");
+  var sheet2 = SpreadsheetApp.openById(id).getSheetByName("入構者数");
+  var textFinderW5 = sheet1.createTextFinder("^(?=.*11/05)(?=.*早稲田)").useRegularExpression(true);
+  var textFinderW6 = sheet1.createTextFinder("^(?=.*11/06)(?=.*早稲田)").useRegularExpression(true);
+  var textFinderW7 = sheet1.createTextFinder("^(?=.*11/07)(?=.*早稲田)").useRegularExpression(true);
+  var textFinderT5 = sheet1.createTextFinder("^(?=.*11/05)(?=.*戸山)").useRegularExpression(true);
+  var textFinderT6 = sheet1.createTextFinder("^(?=.*11/06)(?=.*戸山)").useRegularExpression(true);
+  var textFinderT7 = sheet1.createTextFinder("^(?=.*11/07)(?=.*戸山)").useRegularExpression(true);
+  var textFinderK5 = sheet1.createTextFinder("^(?=.*11/05)(?=.*構外)").useRegularExpression(true);
+  var textFinderK6 = sheet1.createTextFinder("^(?=.*11/06)(?=.*構外)").useRegularExpression(true);
+  var textFinderK7 = sheet1.createTextFinder("^(?=.*11/07)(?=.*構外)").useRegularExpression(true);
+  var cellsW5 = textFinderW5.findAll();
+  var cellsW6 = textFinderW6.findAll();
+  var cellsW7 = textFinderW7.findAll();
+  var cellsT5 = textFinderT5.findAll();
+  var cellsT6 = textFinderT6.findAll();
+  var cellsT7 = textFinderT7.findAll();
+  var cellsK5 = textFinderK5.findAll();
+  var cellsK6 = textFinderK6.findAll();
+  var cellsK7 = textFinderK7.findAll();
+  var itsukaWaseda = cellsW5.length;
+  var muikaWaseda = cellsW6.length;
+  var nanokaWaseda = cellsW7.length;
+  var itsukaToyama = cellsT5.length;
+  var muikaToyama = cellsT6.length;
+  var nanokaToyama = cellsT7.length;
+  var itsukaKougai = cellsK5.length;
+  var muikaKougai = cellsK6.length;
+  var nanokaKougai = cellsK7.length;
+  
+
+  sheet2.getRange("B9").setValue(itsukaWaseda);
+  sheet2.getRange("B11").setValue(muikaWaseda);
+  sheet2.getRange("B13").setValue(nanokaWaseda);
+  sheet2.getRange("C9").setValue(itsukaToyama);
+  sheet2.getRange("C11").setValue(muikaToyama);
+  sheet2.getRange("C13").setValue(nanokaToyama);
+  sheet2.getRange("E9").setValue(itsukaKougai);
+  sheet2.getRange("E11").setValue(muikaKougai);
+  sheet2.getRange("E13").setValue(nanokaKougai);
+
+}
+  
